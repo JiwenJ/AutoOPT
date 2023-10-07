@@ -1,0 +1,122 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 30}: A spy wants to infiltrate a secret base without being detected. There are seven doors in the base, each with a certain security level and reward as shown in the following table: 
+Door P Q R S T U V
+Security level(points) 10 15 20 25 30 35 40
+Reward($) 5000 5500 7000 6000 8000 9500 10000
+The spy has a gadget that can bypass the security level of any door up to a certain limit 80. The spy wants to maximize the total reward of the doors that he can enter while not exceeding the limit of his gadget. How should the spy choose which doors to enter?
+\\\\%
+\textbf{GPT-4}: This is a classic problem that can be modeled as a Binary Integer Programming (BIP) problem. 
+
+**Decision Variables:**
+Let's denote by $x_i$ a binary decision variable that equals 1 if the spy chooses to enter door $i$ and 0 otherwise, where $i$ ∈ {P, Q, R, S, T, U, V}. 
+
+**Objective Function:**
+The objective of the spy is to maximize the total reward of the doors he can enter. So the objective function can be written as:
+\[
+\max Z = 5000x_P + 5500x_Q + 7000x_R + 6000x_S + 8000x_T + 9500x_U + 10000x_V
+\]
+
+**Constraints:**
+The total security level points of the doors the spy chooses to enter cannot exceed the limit of his gadget, which is 80. Therefore, the constraint can be modeled as:
+\[
+10x_P + 15x_Q + 20x_R + 25x_S + 30x_T + 35x_U + 40x_V \leq 80
+\]
+Moreover, the decision variables $x_i$ should be binary:
+\[
+x_i \in \{0, 1\}, \quad \forall i \in \{P, Q, R, S, T, U, V\}
+\]
+
+This problem is modeled this way because we are trying to select a set of doors (binary decision) in such a way that the total reward is maximized (objective function) while the total security points do not exceed the gadget limit (constraint). The decision of whether to enter a door is a binary decision, hence the use of binary integer programming. The reward for each door and the security points associated with each door are represented in the objective function and the constraint, respectively.\\\\%
+\textbf{Vicuna zero-shot}: The problem can be modeled as a Mixed Integer Non-Linear Programming (MINLP) problem.
+
+The decision variables are the binary variables x1, x2, ..., x7 representing whether the spy chooses to enter each door or not. The continuous variables are the security levels of the doors, which are represented by the variables y10, y15, ..., y40.
+
+The objective function is to maximize the total reward, which is given by the equation:
+
+maximize 5000x1 + 5500x2 + 7000x3 + 6000x4 + 8000x5 + 9500x6 + 10000x7
+
+subject to:
+
+* The security level of each door is within the limit of the spy's gadget, which is represented by the equation:
+	+ 80 <= y10 + y15/2 + y20 + y25/2 + y30 + y35/2 + y40
+* The spy can only enter doors with a security level below the limit of his gadget, which is represented by the equation:
+	+ y10 <= 80
+	+ y15 <= 80
+	+ y20 <= 80
+	+ y25 <= 80
+	+ y30 <= 80
+	+ y35 <= 80
+	+ y40 <= 80
+* The spy can only enter doors with a reward greater than 0, which is represented by the equation:
+	+ x1 + x2 + x3 + x4 + x5 + x6 + x7 >= 1
+
+The above equation can be represented in mathematical notation as follows:
+
+maximize 5000x1 + 5500x2 + 7000x3 + 6000x4 + 8000x5 + 9500x6 + 10000x7
+
+subject to:
+
+80 <= y10 + y15/2 + y20 + y25/2 + y30 + y35/2 + y40 <= 100\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the number of points required to bypass each door as x10, x15, x20, x25, x30, x35, and x40, respectively. The spy has a gadget that can bypass a certain number of points up to a limit of 80. The total number of points the spy can use is limited by the gadget's capacity.
+
+Decision variables:
+x10, x15, x20, x25, x30, x35, x40
+
+Objective function:
+The objective is to maximize the total reward of the doors that the spy can enter while not exceeding the limit of the gadget's capacity. The total reward is given by the sum of the rewards for each door multiplied by the number of points required to bypass the door:
+
+$R\_{total} = \sum\_{i=1}^7 R\_i \cdot x\_i$
+
+Thus, our objective function is:
+
+$\max R\_{total}$
+
+Constraints:
+1. The total number of points used by the spy must not exceed 80:
+
+$\sum\_{i=1}^7 x\_i \leq 80$
+
+2. The security level of each door must be bypassed:
+
+$x\_i \geq$ security level of door i
+
+In LaTeX form, the mathematical model is as follows:
+
+\[
+\begin{aligned}
+& \text{maximize} && \sum\_{i=1}^7 R\_i \cdot x\_i \\
+& \text{subject to} && \sum\_{i=1}^7 x\_i \leq 80, \\
+& && x\_i \geq security level of door i.
+\end{aligned}
+\]
+
+This is a non-linear optimization problem due to the non-linear constraints. It is a specific type of non-linear programming problem known as a mixed-integer programming problem. To solve it, you can use specialized mixed-integer programming solvers.\\\\%
+\textbf{Vicuna few-shot}: To model this problem, we can define the decision variables as the number of doors that the spy chooses to enter, represented by a binary variable x1, x2, x3, ..., x7. The objective function can be defined as the total reward of the doors that the spy chooses to enter, subject to the constraint that the sum of the security levels of the doors cannot exceed 80.
+
+Mathematical model:
+
+Maximize: ∑i=17xiRi
+
+Subject to: ∑i=17xiSi ≤ 80
+
+Where:
+
+* xi represents the binary variable for whether the spy chooses to enter door i (1 if chosen, 0 if not)
+* Ri represents the reward for entering door i
+* Si represents the security level for door i
+
+This is a linear programming problem, and can be solved using a software tool such as Excel or MATLAB. The solution will give the number of doors that the spy should choose to enter in order to maximize the total reward while staying within the limit of the gadget.\\\\%
+\end{document}

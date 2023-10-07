@@ -1,0 +1,121 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 31}: The company has four vehicles and 16 locations to visit, as shown in the following table:
+Location	X coordinate	Y coordinate
+Depot	0	0
+A	1	5
+B	2	6
+C	3	9
+D	4	3
+E	5	1
+F	6	7
+G	7	4
+H	8	8
+I	9	2
+J	10	5
+K	11	6
+L	12	9
+M	13	3
+N	14	1
+O	15	7
+The distance between any two locations is equal to the Manhattan distance, which is the sum of the absolute differences of their x and y coordinates. For example, the distance between A and B is (2-1) + (6-5) = 2. The goal is to minimize the total distance traveled by all vehicles.
+\\\\%
+\textbf{GPT-4}: This is a variant of the Vehicle Routing Problem (VRP), a classic optimization problem in the field of logistics and supply chain management. Since the problem involves routing multiple vehicles to service multiple locations, the problem is a combinatorial optimization problem, specifically a Mixed Integer Programming (MIP) problem.
+
+Let's set up the mathematical model:
+
+1. **Decision Variables**: Let's define binary decision variables $x_{ijk}$ where $x_{ijk} = 1$ if vehicle $k$ travels directly from location $i$ to location $j$, and $x_{ijk} = 0$ otherwise. We also need continuous variables $u_{ik}$ to eliminate subtours, representing the order in which vehicle $k$ visits location $i$.
+
+2. **Objective Function**: The objective is to minimize the total distance traveled by all vehicles, which is equivalent to minimizing the sum of the Manhattan distances between all pairs of locations, multiplied by the decision variables:
+
+    \[ \min \sum_{i=1}^{16} \sum_{j=1, j \neq i}^{16} \sum_{k=1}^{4} d_{ij} x_{ijk} \]
+
+    where $d_{ij}$ is the Manhattan distance between location $i$ and location $j$.
+
+3. **Constraints**:
+
+   (a) Each location (except the depot) is visited exactly once by a vehicle:
+
+    \[ \sum_{k=1}^{4} \sum_{j=1, j \neq i}^{16} x_{ijk} = 1, \quad \forall i \in \{1,...,16\} \]
+
+   (b) Each vehicle must start and end its route at the depot:
+
+    \[ \sum_{j=2}^{16} x_{1jk} = 1, \quad \forall k \in \{1,...,4\} \]
+    
+    \[ \sum_{i=2}^{16} x_{i1k} = 1, \quad \forall k \in \{1,...,4\} \]
+
+   (c) If a vehicle enters a location, it must also leave it (except for the depot):
+
+    \[ \sum_{j=1, j \neq i}^{16} x_{ijk} = \sum_{j=1, j \neq i}^{16} x_{jik}, \quad \forall i \in \{2,...,16\}, \forall k \in \{1,...,4\} \]
+
+   (d) Subtour elimination: To prevent vehicles from making subtours among a subset of locations, we use the following constraints:
+
+    \[ u_{ik} + 1 \leq u_{jk} + 15 (1 - x_{ijk}), \quad \forall i,j \in \{2,...,16\}, i \neq j, \forall k \in \{1,...,4\} \]
+
+    The variables $u_{ik}$ take positive integer values:
+
+    \[ u_{ik} \geq 1, \quad \forall i \in \{2,...,16\}, \forall k \in \{1,...,4\} \]
+
+This mathematical model has been established in such a way that it accurately represents the problem at hand. The model uses decision variables that capture the essence of the problem: the routes of the vehicles. The objective function aims to minimize the total distance traveled by all vehicles. The constraints ensure that every location is visited exactly once, vehicles start and end at the depot, and there are no subtours.\\\\%
+\textbf{Vicuna zero-shot}: The mathematical model for this problem can be formulated as follows:
+
+Minimize: Z = Σ\_{i=1}^{16} d(v\_i, l\_i) \* x\_i
+
+Subject to:
+
+* Σ\_{i=1}^{16} x\_i <= 4 (vehicle capacity)
+* x\_i >= 0 (vehicle cannot be at location i if it is not assigned to it)
+* x\_i <= 1 (vehicle cannot visit location i more than once)
+
+Where:
+
+* d(v\_i, l\_i) is the distance between vehicle i and location i
+* x\_i is a binary variable indicating whether vehicle i visits location i (1) or not (0)
+
+This problem is a combinatorial optimization problem, specifically a vehicle routing problem (VRP) with a constraint on the number of vehicles. The objective function is to minimize the total distance traveled by all vehicles, and the constraints ensure that each vehicle visits at most one location, and that the total number of vehicles assigned to locations does not exceed the total number of vehicles available.\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the locations as shown in the table as L1, L2, L3, ..., L15. We will also denote the number of vehicles assigned to each location as shown in the table as V1, V2, V3, ..., V4.
+
+Decision variables:
+$x\_{ij} \geq 0$ for all i from 1 to 4 and all j from 1 to 15, where x\_{ij} represents the number of vehicles assigned to location Lj by vehicle Vi.
+
+Objective function:
+The objective is to minimize the total distance traveled by all vehicles. The total distance traveled by vehicle Vi is given by the sum of the distances between the locations it visits and the depot. The total distance traveled by all vehicles is the sum of the distances traveled by each vehicle. The distance between any two locations is equal to the Manhattan distance, which is the sum of the absolute differences of their x and y coordinates. For example, the distance between L1 and L2 is (2-1) + (6-5) = 2. The total distance traveled by vehicle Vi is given by the sum of the distances between the locations it visits and the depot. The total distance traveled by all vehicles is the sum of the distances traveled by each vehicle. The total distance traveled by all vehicles is the sum of the distances traveled by each vehicle. The objective function is:
+
+$\min \sum\_{i=1}^4 \sum\_{j=1}^{15} x\_{ij}$
+
+Constraints:
+1. Each location must be visited by exactly one vehicle:
+
+$\sum\_{i=1}^4 x\_{ij} = 1$ for all j from 1 to 15
+
+2. Each vehicle must be assigned to exactly one location:
+
+$\sum\_{j=1}^{15} x\_{ij} = 1$ for all i from 1 to 4
+
+3. The decision variables must be non-negative:
+
+$x\_{ij} \geq 0$ for all i from 1 to 4 and all j from 1 to 15
+
+In LaTeX form, the mathematical model is as follows:\\\\%
+\textbf{Vicuna few-shot}: To minimize the total distance traveled by all vehicles, we can formulate the following mathematical optimization problem:
+
+\begin{aligned}
+\text{minimize} \quad & \sum\_{i=1}^{4} \sum\_{j=1}^{16} d(v\_i, l\_j) \cdot x\_{ij} \
+\text{subject to} \quad & \sum\_{j=1}^{16} x\_{ij} = 1 \quad \forall i \in {1,2,3,4} \
+& x\_{ij} \in {0,1} \quad \forall i,j \in {1,2,3,4,16} \
+\end{aligned}
+
+where $d(v\_i, l\_j)$ is the Manhattan distance between vehicle $v\_i$ and location $l\_j$, $x\_{ij}$ is a binary decision variable indicating whether vehicle $v\_i$ visits location $l\_j$, and the sum of all $x\_{ij}$ is equal to 1, indicating that each vehicle can\\\\%
+\end{document}

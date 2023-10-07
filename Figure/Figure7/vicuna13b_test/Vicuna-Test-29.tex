@@ -1,0 +1,127 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 29}: A miner wants to extract some minerals from a mine without spending more than his budget. There are five minerals in the mine, each with a certain extraction cost and value as shown in the following table: 
+Mineral W X Y Z A
+Extraction cost($) 3000 4000 5000 6000 7000
+Value(points) 1500 2000 2500 3000 3500
+The miner has a budget of $15,000 for extracting minerals. The miner wants to maximize the total value of the minerals that he can extract while not exceeding his budget. How should the miner choose which minerals to extract?
+\\\\%
+\textbf{GPT-4}: First, let's define the decision variables:
+
+Let's use binary decision variables $x_i$ where $i \in \{W, X, Y, Z, A\}$. $x_i=1$ if the miner decides to extract mineral $i$, and $x_i=0$ if the miner does not extract mineral $i$.
+
+The objective function is to maximize the total value of the minerals:
+
+$$\max \sum_{i \in \{W, X, Y, Z, A\}} V_i x_i$$
+
+where $V_i$ represents the value of mineral $i$.
+
+The constraint is that the total cost of the minerals being extracted should not exceed the budget:
+
+$$\sum_{i \in \{W, X, Y, Z, A\}} C_i x_i \leq B$$
+
+where $C_i$ represents the cost of extracting mineral $i$ and $B$ is the budget ($B = 15000$).
+
+In addition, we have the binary constraint:
+
+$$x_i \in \{0, 1\}$$
+
+for all $i \in \{W, X, Y, Z, A\}$.
+
+So, the mathematical model of this problem is:
+
+\[
+\begin{aligned}
+&\max \sum_{i \in \{W, X, Y, Z, A\}} V_i x_i \\
+&s.t. \\
+&\sum_{i \in \{W, X, Y, Z, A\}} C_i x_i \leq B \\
+&x_i \in \{0, 1\}, \quad \forall i \in \{W, X, Y, Z, A\}
+\end{aligned}
+\]
+
+This problem is a Binary Integer Programming problem, which is a particular case of Mixed Integer Programming. It is also considered as a type of Knapsack Problem, which is a classic problem in combinatorial optimization.
+
+The reason why we model the problem in this way is that we have a set of items (minerals) each with a cost and a value, and we want to decide which items to select (extract) to maximize the total value without exceeding a total cost (budget). This directly fits into the framework of the Knapsack Problem, which in turn can be modelled as a Binary Integer Programming problem. The binary decision variables represent whether or not to extract each mineral, and the constraints ensure that the total cost does not exceed the budget.\\\\%
+\textbf{Vicuna zero-shot}: The miner wants to extract some minerals from a mine without spending more than his budget. There are five minerals in the mine, each with a certain extraction cost and value as shown in the following table:
+
+| Mineral | W | X | Y | Z |
+| --- | --- | --- | --- | --- |
+| A | 3000 | 4000 | 5000 | 6000 |
+| B | 4000 | 5000 | 6000 | 7000 |
+| C | 5000 | 6000 | 7000 | 8000 |
+| D | 6000 | 7000 | 8000 | 9000 |
+| E | 7000 | 8000 | 9000 | 10000 |
+
+The miner has a budget of $15,000 for extracting minerals. The miner wants to maximize the total value of the minerals that he can extract while not exceeding his budget.
+
+To model this problem, we can define the decision variables as the number of minerals of each type that the miner chooses to extract. Let's denote the number of mineral A, B, C, D, and E that the miner chooses to extract by xA, xB, xC, xD, and xE respectively.
+
+The objective function is to maximize the total value of the minerals that the miner extracts, which is equal to the sum of the values of the extracted minerals.
+
+Maximize: 1500xA + 2000xB + 2500xC + 3000xD + 3500xE
+
+The miner has a budget of $15,000 for extracting minerals, which can be expressed as a constraint.
+
+Constraint: 3000xA + 4000xB + 5000xC + 6000xD + 7000xE <= 15000
+
+Another constraint is\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the number of units of each mineral that the miner extracts as x1, x2, x3, x4, and x5, respectively.
+
+Decision variables:
+$x1, x2, x3, x4, x5 \geq 0$
+
+Objective function:
+The objective is to maximize the total value of the minerals extracted. The total value is given by the following formula:
+
+$V = x\_1(1500 + 2000x\_2 + 2500x\_3 + 3000x\_4 + 3500x\_5)$
+
+Thus, our objective function is:
+
+$\max V = \max (1500 + 2000x\_2 + 2500x\_3 + 3000x\_4 + 3500x\_5)$
+
+Constraints:
+1. The total extraction cost must not exceed the budget:
+
+$3000x\_1 + 4000x\_2 + 5000x\_3 + 6000x\_4 + 7000x\_5 \leq 15000$
+
+2. The number of units of each mineral must be non-negative:
+
+$x\_1, x\_2, x\_3, x\_4, x\_5 \geq 0$
+
+In LaTeX form, the mathematical model is as follows:
+
+\[
+\begin{aligned}
+& \text{maximize} && 1500 + 2000x\_2 + 2500x\_3 + 3000x\_4 + 3500x\_5 \\
+& \text{subject to} && 3000x\_1 + 4000x\_2 + 5000x\_3 + 6000x\_4 + 7000x\_5 \leq 15000, \\
+& && x\_1, x\_2, x\_3, x\_4, x\_5 \geq 0.
+\end{aligned}
+\]
+
+This is a\\\\%
+\textbf{Vicuna few-shot}: To model this problem, we can define decision variables for each mineral, indicating whether or not it is extracted. Let's denote the decision variables as binary variables $x\_1, x\_2, x\_3, x\_4, x\_5$, where $x\_i = 1$ if mineral $i$ is extracted and $x\_i = 0$ if it is not.
+
+The objective function is to maximize the total value of the extracted minerals, which can be represented as:
+
+$\sum\_{i=1}^{5} x\_i \cdot value\_i$
+
+We also need to consider the extraction cost for each mineral. The total extraction cost is given by:
+
+$\sum\_{i=1}^{5} x\_i \cdot W\_i \cdot cost\_i$
+
+We need to ensure that the total extraction cost does not exceed the miner's budget of $15,000$. This can be represented as a constraint:
+
+$\sum\_{i=1}^{5} x\_i \cdot W\_i \cdot cost\_i \leq 15\\\\%
+\end{document}

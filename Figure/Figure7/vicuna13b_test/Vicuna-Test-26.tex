@@ -1,0 +1,145 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 26}: A thief wants to steal some items from a store without being caught. There are five items in the store, each with a certain weight and value as shown in the following table:
+Item	A	B	C	D	E
+Weight (lbs)	2	3	4	5	6
+Value ($)	1000	1200	1500	1800	2000
+The thief has a knapsack with a capacity of 10 lbs for weight. The thief wants to maximize the total value of the items that he can fit into the knapsack while not exceeding the weight limit. How should the thief choose which items to take?
+\\\\%
+\textbf{GPT-4}: This is a classic example of the 0-1 Knapsack Problem, which is a combinatorial optimization problem. The decision to take an item or not is a binary decision, hence the 0-1 in the name. 
+
+First, let's define the decision variables:
+
+- Let's denote $x_i$ as the decision variable that equals 1 if item $i$ is chosen and 0 otherwise, for $i \in \{A, B, C, D, E\}$.
+
+Now we can formulate the objective function, which is to maximize the total value of the chosen items:
+
+- $\max Z = 1000x_A + 1200x_B + 1500x_C + 1800x_D + 2000x_E$ 
+
+Under the constraints of the total weight that can be carried:
+
+- $2x_A + 3x_B + 4x_C + 5x_D + 6x_E \leq 10$ 
+
+And naturally, each item can either be chosen or not, so we have:
+
+- $x_i \in \{0,1\}$ for $i \in \{A, B, C, D, E\}$
+
+The full problem can then be summarized as:
+
+\[
+\begin{align*}
+\max Z &= 1000x_A + 1200x_B + 1500x_C + 1800x_D + 2000x_E \\
+\text{s.t.} \\
+2x_A + 3x_B + 4x_C + 5x_D + 6x_E &\leq 10 \\
+x_i &\in \{0,1\} \quad \text{for } i \in \{A, B, C, D, E\}
+\end{align*}
+\]
+
+The reason why we model the problem this way is because we want to maximize the value of the stolen items (hence the objective function) while respecting the thief's knapsack capacity constraint (hence the weight constraint). The decision variables are binary because each item can either be stolen or not (it cannot be partially stolen), which is characteristic of the 0-1 Knapsack Problem.\\\\%
+\textbf{Vicuna zero-shot}: The problem can be modeled as a Knapsack problem, which is a well-known optimization problem in operations research.
+
+The decision variables for this problem are the items that the thief chooses to take. Let's denote the set of items taken by the thief as X = {A, B, C, D, E}.
+
+The objective function is to maximize the total value of the items taken, which is given by:
+
+maximize ∑ (Value(X) - Weight(X))
+
+where Value(X) is the sum of the values of the items in X and Weight(X) is the sum of the weights of the items in X.
+
+The constraints for this problem are:
+
+1. The total weight of the items taken must not exceed the capacity of the knapsack, which is 10 lbs. Let's denote this constraint as:
+
+∑ Weight(X) <= 10
+
+2. The thief must take at least one item, so the cardinality of X must be greater than or equal to 1. Let's denote this constraint as:
+
+|X| >= 1
+
+3. Each item must have a non-negative weight and value. Let's denote this constraint as:
+
+Weight(X) >= 0, Value(X) >= 0
+
+The problem can be formulated as follows:
+
+maximize ∑ (Value(X) - Weight(X))
+
+subject to:
+
+∑ Weight(X) <= 10
+
+|X| >= 1
+
+Weight(X) >= 0, Value(X) >= 0
+
+This is a mathematical model of the problem of how a thief should choose which items to take in order to maximize the total value of the items that he can fit into the knapsack while not exceeding the weight limit.\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the weight and value of each item as w\_i and v\_i, respectively, where i = 1, 2, 3, 4, 5.
+
+Decision variables:
+$x\_i \in {0, 1}$ for i = 1, 2, 3, 4, 5
+
+Objective function:
+The objective is to maximize the total value of the items that the thief can fit into the knapsack while not exceeding the weight limit. The total value of the items that the thief can fit into the knapsack is given by the following formula:
+
+$\sum\_{i=1}^5 v\_i x\_i$
+
+Thus, our objective function is:
+
+$\max \sum\_{i=1}^5 v\_i x\_i$
+
+Constraints:
+1. The weight of the items must not exceed the capacity of the knapsack:
+
+$\sum\_{i=1}^5 w\_i x\_i \leq 10$
+
+2. The thief must choose exactly one item or none at all:
+
+$\sum\_{i=1}^5 x\_i = 1$
+
+In LaTeX form, the mathematical model is as follows:
+
+\[
+\begin{aligned}
+& \text{maximize} && \sum\_{i=1}^5 v\_i x\_i \\
+& \text{subject to} && \sum\_{i=1}^5 w\_i x\_i \leq 10, \\
+&&& \sum\_{i=1}^5 x\_i = 1.
+\end{aligned}
+\]
+
+This is a linear optimization problem with inequality constraints. It can be solved using standard linear programming techniques, such as the simplex method or the crisscross method. The solution to this problem is to choose the items with the highest value-to-weight ratio, i.e., the items with the highest value divided by their weight.\\\\%
+\textbf{Vicuna few-shot}: To model this problem, we can use the following decision variables:
+- $x\_1$: the number of pounds of item A that the thief takes (0 to 2)
+- $x\_2$: the number of pounds of item B that the thief takes (0 to 3)
+- $x\_3$: the number of pounds of item C that the thief takes (0 to 4)
+- $x\_4$: the number of pounds of item D that the thief takes (0 to 5)
+- $x\_5$: the number of pounds of item E that the thief takes (0 to 6)
+
+The objective function is to maximize the total value of the items taken:
+
+$$
+\text{maximize} \quad \sum\_{i=1}^5 x\_i \cdot A\_i
+$$
+
+The total weight of the items taken should not exceed the capacity of the knapsack:
+
+$$
+\sum\_{i=1}^5 x\_i \leq 10
+$$
+
+For each item, the weight should be non-negative:
+
+$$
+x\_i\\\\%
+\end{document}

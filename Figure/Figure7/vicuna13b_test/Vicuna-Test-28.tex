@@ -1,0 +1,124 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 28}: A collector wants to buy some paintings from an auction without spending more than his budget. There are six paintings in the auction, each with a certain price and value as shown in the following table: 
+Painting J K L M N O 
+Price ($) 2000 3000 4000 5000 6000 7000 
+Value (points) 1000 1500 2000 2500 3000 3500 
+The collector has a budget of $10,000 for buying paintings. The collector wants to maximize the total value of the paintings that he can buy while not exceeding his budget. How should the collector choose which paintings to buy?
+\\\\%
+\textbf{GPT-4}: This problem is an instance of the classic 0-1 Knapsack Problem, which can be solved by Integer Programming. 
+
+First, let's define the decision variables, objective function, and constraints.
+
+**Decision Variables:** Let's define binary decision variables $x_i$ for each painting $i \in \{J, K, L, M, N, O\}$, where $x_i=1$ if the collector buys the painting and $x_i=0$ otherwise.
+
+**Objective Function:** The objective of the collector is to maximize the total value of the purchased paintings. This can be represented as:
+
+$$\max \sum_{i \in \{J, K, L, M, N, O\}} v_i x_i$$
+
+where $v_i$ is the value of painting $i$.
+
+**Constraints:** The total cost of the purchased paintings should not exceed the budget. This constraint can be represented as:
+
+$$\sum_{i \in \{J, K, L, M, N, O\}} p_i x_i \leq B$$
+
+where $p_i$ is the price of painting $i$ and $B$ is the budget ($10,000 in this case).
+
+The complete optimization model is as follows:
+
+\[
+\begin{align*}
+\text{Maximize} & \quad 1000x_J + 1500x_K + 2000x_L + 2500x_M + 3000x_N + 3500x_O \\
+\text{Subject to} & \quad 2000x_J + 3000x_K + 4000x_L + 5000x_M + 6000x_N + 7000x_O \leq 10000 \\
+& \quad x_i \in \{0,1\} \quad \forall i \in \{J, K, L, M, N, O\}
+\end{align*}
+\]
+
+This model is simple and straightforward: it directly maps the decision of purchasing each painting to a binary decision variable, and the objective and constraint are linear combinations of these decision variables. We thus have a Binary Integer Programming problem. The 0-1 decision variable design takes into account all possible situations - either the collector buys a painting or not. Furthermore, it makes the problem as simple as possible, avoiding unnecessary complexity.\\\\%
+\textbf{Vicuna zero-shot}: The problem can be modeled as a mathematical optimization problem, where the objective is to maximize the total value of the paintings while not exceeding the budget.
+
+Let x\_j be a binary variable indicating whether the collector buys painting j or not. The objective function can be defined as the total value of the paintings bought:
+
+max ∑ (Value\_j \* x\_j)
+
+subject to:
+
+∑ (Price\_j \* x\_j) ≤ Budget
+
+for j = 1 to 6
+
+The first constraint ensures that the total price of the paintings bought does not exceed the budget.
+
+This problem is a linear programming problem, as it involves linear objective function and constraints. The solution to this problem will provide the optimal combination of paintings to buy, while maximizing the total value and staying within the budget.\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the number of paintings bought by the collector as x, where x can take on values from 0 to 6. The total price of the paintings is given by the sum of the prices of the paintings bought:
+
+$P = 2000x + 3000x + 4000x + 5000x + 6000x + 7000x$
+
+The total value of the paintings is given by the sum of the values of the paintings bought:
+
+$V = 1000x + 1500x + 2000x + 2500x + 3000x + 3500x$
+
+The collector's budget is given by:
+
+$B = 10000$
+
+The collector wants to maximize the total value of the paintings while not exceeding the budget. This is a constrained optimization problem.
+
+Objective function:
+The objective is to maximize the total value of the paintings. The total value of the paintings is given by the following formula:
+
+$V = 1000x + 1500x + 2000x + 2500x + 3000x + 3500x$
+
+Thus, our objective function is:
+
+$\max V = \max (1000x + 1500x + 2000x + 2500x + 3000x + 3500x)$
+
+Constraints:
+
+1. The total price of the paintings must not exceed the collector's budget:
+
+$P \leq B = 10000$
+
+2. The collector can buy at most six paintings:
+
+$x \leq 6$
+
+In LaTeX form, the mathematical model is as follows:
+
+\[
+\begin{aligned}
+& \text{maximize} && 1000x + 1500x + 2000x + 2500x + 3000x + 3500x\\\\%
+\textbf{Vicuna few-shot}: To solve this problem, we can formulate it as a mathematical optimization problem. Let's define the decision variables:
+
+* Let x1, x2, x3, x4, x5, and x6 be binary variables, where xi=1 if painting i is bought and xi=0 otherwise.
+* Let yi be the value of painting i in points.
+* Let B be the budget in dollars.
+
+Our objective is to maximize the total value of the paintings:
+
+$\max \sum\_{i=1}^6 y\_i$
+
+Subject to the budget constraint:
+
+$\sum\_{i=1}^6 x\_i \leq B$
+
+We can also add a constraint to ensure that each painting is either bought or not bought:
+
+$\sum\_{i=1}^6 x\_i \leq 6$
+
+The above constraints form a linear programming problem. We can use a solver to find the optimal solution.
+
+In this case, the solver will find that the collector should buy paintings J, K, and M, with a total value of 3000+\\\\%
+\end{document}

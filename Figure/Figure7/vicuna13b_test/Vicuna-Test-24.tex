@@ -1,0 +1,124 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 24}: A delivery person wants to deliver packages to 6 different customers and return to his office. The customers are numbered from 1 to 6 and the distance and traffic level between each pair of customers are given in the following table: 
+Customer 1 2 3 4 5 6 
+1 - 3 6 9 4 2 
+2 - - 5 8 7 3 
+3 - - - 7 8 4 
+4 - - - - 9 5 
+5 - - - - - 6 
+6 - - - - - 
+The traffic level between each pair of customers is equal to the distance multiplied by a constant factor of $0.05 per mile. The delivery person has a limited amount of time and can only deliver packages to each customer once. The delivery person wants to minimize the total traffic level while delivering packages to each customer exactly once. How should the delivery person plan his route?
+\\\\%
+\textbf{GPT-4}: This is a variant of the well-known Traveling Salesman Problem (TSP), where the objective is to minimize the total traffic level instead of the total distance. It's a combinatorial optimization problem, and in this case, it can be specifically modeled as an Integer Programming (IP) problem.
+
+Let's denote:
+
+- $n$ is the number of customers, which equals 6 in this case.
+- $d_{ij}$ is the distance from customer $i$ to customer $j$.
+- $t_{ij}$ is the traffic level from customer $i$ to customer $j$, which equals to $0.05 \times d_{ij}$.
+- $x_{ij}$ is a binary decision variable that equals 1 if the route from customer $i$ to customer $j$ is chosen, and 0 otherwise.
+
+The optimization problem can be modeled as follows:
+
+Minimize
+\[
+\sum_{i=1}^{n}\sum_{j=1,j\neq i}^{n} t_{ij}x_{ij}
+\]
+
+Subject to:
+
+1. Each customer is visited exactly once:
+
+\[
+\sum_{i=1,i\neq j}^{n} x_{ij} = 1, \quad \text{for all } j=1,...,n
+\]
+
+2. Each customer is left exactly once:
+
+\[
+\sum_{j=1,j\neq i}^{n} x_{ij} = 1, \quad \text{for all } i=1,...,n
+\]
+
+3. To avoid sub-tours (i.e., cycles that do not include all customers), we include the following constraints:
+
+\[
+\sum_{i,j \in S, i\neq j}x_{ij} \leq |S|-1, \quad \text{for all subsets } S \subset \{1,...,n\} \text{ with } |S| \geq 2
+\]
+
+4. The decision variables are binary:
+
+\[
+x_{ij} \in \{0,1\}, \quad \text{for all } i,j=1,...,n, i\neq j
+\]
+
+In this formulation, the objective function aims to minimize the total traffic level. The first two sets of constraints ensure that each customer is visited and left exactly once. The third set of constraints avoids solutions where the delivery person would make a tour that does not include all customers, which would result in a lower total traffic level but not be a valid solution to the problem. The last constraint restricts the decision variables to binary values, making this an Integer Programming problem.
+
+Please note that the constraint to avoid sub-tours results in an exponential number of constraints, making this problem computationally challenging for larger numbers of customers. There are more advanced formulations and methods to solve TSP problems efficiently, such as using cutting-plane methods or specialized TSP solvers.\\\\%
+\textbf{Vicuna zero-shot}: To model this problem, we can define the decision variables as binary variables x1, x2, ..., x6, indicating whether the delivery person visits each customer or not. We can also define the objective function as the total traffic level, which is equal to the sum of the distances between each pair of customers multiplied by the traffic level between them.
+
+The constraints for this problem are as follows:
+
+* The delivery person can only visit each customer once, which can be expressed as the following constraint: x1 + x2 + ... + x6 = 1
+* The delivery person must start and end at his office, which can be expressed as the following constraint: x1 + x2 + ... + x6 = 1
+* The delivery person can only visit each customer if it is not already visited by another customer, which can be expressed as the following constraint: xi \* xj = 0 for all i != j
+* The delivery person can only visit each customer if it is within the limited amount of time, which can be expressed as the following constraint: xi <= t for all i, where t is the maximum amount of time available
+
+Based on the above constraints, this problem can be modeled as a Mixed Integer Programming (MIP) problem. The type of problem is MIP because it involves both continuous and integer decision variables. The objective function is to minimize the total traffic level while ensuring that the delivery person visits each customer exactly once and starts and ends at his office.\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the number of packages to be delivered to each customer as n1, n2, n3, n4, n5, and n6, respectively. We will also denote the distance between each pair of customers as d12, d13, d14, d15, d16, and d23, d24, d25, d26, respectively.
+
+Decision variables:
+n1, n2, n3, n4, n5, n6 >= 0
+
+Objective function:
+The objective is to minimize the total traffic level while delivering packages to each customer exactly once. The total traffic level is given by the sum of the traffic level between each pair of customers. The traffic level between each pair of customers is given by the distance multiplied by a constant factor of $0.05 per mile. Thus, our objective function is:
+
+$\min \sum\_{i=1}^{6} n\_i \cdot d\_{i,i+1}$
+
+Constraints:
+1. The delivery person must deliver exactly one package to each customer:
+
+$\sum\_{i=1}^{6} n\_i = 1$
+
+2. The distance between each pair of customers is non-negative:
+
+$d\_{i,i+1} \geq 0$
+
+3. The traffic level between each pair of customers is non-negative:
+
+$n\_i \cdot d\_{i,i+1} \geq 0$
+
+In LaTeX form, the mathematical model is as follows:
+
+\[
+\begin{aligned}
+& \text{minimize} && \sum\_{i=1}^{6} n\_i \cdot d\_{i,i+1} \\
+& \text{subject to} && \sum\_{i=1}^{6} n\_i = 1, \\
+&& d\_{i,i+1} \geq 0, \\
+&& n\_i \cdot d\_{i,i+1} \geq 0.
+\end{aligned}
+\]
+
+This is a mixed integer programming problem, which involves both continuous and integer decision variables. It can be solved using specialized mixed integer programming solvers. One possible solution is to deliver\\\\%
+\textbf{Vicuna few-shot}: To minimize the total traffic level while delivering packages to each customer exactly once, the delivery person should follow a greedy algorithm.
+
+First, the delivery person should visit the customer with the lowest distance (Customer 1). Then, the delivery person should visit the customer with the next lowest distance (Customer 2), and so on.
+
+The total traffic level can be calculated as the sum of the traffic level between each pair of customers. In this case, the total traffic level is equal to the sum of the distances between each pair of customers multiplied by $0.05 per mile$.
+
+The delivery person should aim to minimize the total traffic level by visiting the customers in the order of lowest distance to highest distance. This way, the delivery person will minimize the total traffic level while delivering packages to each customer exactly once.
+
+In summary, the delivery person should follow a greedy algorithm by visiting the customer with the lowest distance first, then the customer with the next lowest distance, and so on. This will minimize the total traffic level while delivering packages to each customer exactly once.\\\\%
+\end{document}

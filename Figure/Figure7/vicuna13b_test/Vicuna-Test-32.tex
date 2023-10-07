@@ -1,0 +1,141 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 32}: A courier company needs to deliver packages from a warehouse to different customers in a city. The company has five vehicles and 20 customers to visit, as shown in the following table:
+Customer	X coordinate	Y coordinate
+Warehouse	0	0
+A	1	6
+B	2	7
+C	3	10
+D	4	4
+E	5	2
+F	6	8
+G	7	5
+H	8	9
+I	9	3
+J	10	6
+K	11	7
+L	12	10
+M	13	4
+N	14	2
+O	15	8
+P	-1	-6
+Q	-2	-7
+R	-3	-10
+S	-4	-4
+The distance between any two locations is equal to the Euclidean distance, which is the square root of the sum of the squares of their x and y coordinate differences.  The goal is to minimize the total distance traveled by all vehicles.
+\\\\%
+\textbf{GPT-4}: This is a classic problem known as the Vehicle Routing Problem (VRP), a well-studied problem in Operations Research. The VRP is a generalization of the Traveling Salesman Problem (TSP). In this case, we are dealing with a version of VRP with Euclidean distances, multiple vehicles, and capacity constraints.
+
+Let's start by defining our decision variables, objective function, and constraints.
+
+**Decision Variables:**
+
+We will define the binary decision variable $x_{ijk}$ that equals 1 if vehicle $k$ travels directly from customer $i$ to customer $j$, and 0 otherwise. Note that we consider the warehouse as a customer for modeling purposes. There are 5 vehicles and 21 locations (including the warehouse), so $i, j \in \{0, 1, 2, ..., 20\}$ and $k \in \{1, 2, ..., 5\}$.
+
+**Objective Function:**
+
+Our goal is to minimize the total distance traveled by all vehicles. The distance between two locations $i$ and $j$ can be computed by the Euclidean distance, denoted as $d_{ij} = \sqrt{(x_i-x_j)^2 + (y_i-y_j)^2}$. So, the objective function is:
+
+$$\min \sum_{i=0}^{20} \sum_{j \ne i}^{20} \sum_{k=1}^{5} d_{ij} \cdot x_{ijk}$$
+
+**Constraints:**
+
+1. **Flow constraints:** Each customer is visited exactly once by exactly one vehicle:
+
+    $$\sum_{j \ne i} \sum_{k=1}^{5} x_{ijk} = 1, \quad \forall i \in \{1, 2, ..., 20\}$$
+    $$\sum_{j \ne i} \sum_{k=1}^{5} x_{jik} = 1, \quad \forall i \in \{1, 2, ..., 20\}$$
+
+2. **Vehicle constraints:** The vehicles start and end their route at the warehouse:
+
+    $$\sum_{j=1}^{20} x_{0jk} = 1, \quad \forall k \in \{1, 2, ..., 5\}$$
+    $$\sum_{i=1}^{20} x_{i0k} = 1, \quad \forall k \in \{1, 2, ..., 5\}$$
+
+3. **Subtour elimination constraints:** To avoid any vehicle making a tour and returning to the warehouse without visiting all the required customers (i.e., forming a subtour), we need to add subtour elimination constraints. These constraints can be formulated in several ways, but one common approach is to introduce auxiliary variables $u_i$, which indicate the position of customer $i$ in the vehicle's route. These constraints can then be written as:
+
+    $$u_i - u_j + 1 \le (20 - 1) \cdot (1 - x_{ijk}), \quad \forall i \ne j, i, j \in \{1, 2, ..., 20\}, k \in \{1, 2, ..., 5\}$$
+
+This model is an example of an Integer Programming (IP) problem because our decision variables are binary. However, due to the subtour elimination constraints, this problem is not a linear problem but rather a Mixed Integer Linear Programming (MILP) problem. It's also important to note that VRPs are NP-hard, so they can be computationally challenging to solve\\\\%
+\textbf{Vicuna zero-shot}: The mathematical model for this problem can be formulated as follows:
+
+Minimize: Z = ∑\_{i=1}^{20} d(C\_i, D\_i)^2
+
+Subject to:
+
+* ∑\_{i=1}^{5} x\_i = 20 (constraint 1)
+* x\_i ≥ 0 (constraint 2)
+* y\_i ≥ 0 (constraint 3)
+* x\_i + y\_i = 1 (constraint 4)
+
+Where:
+
+* d(C\_i, D\_i) is the Euclidean distance between customer C\_i and delivery location D\_i
+* x\_i is the number of packages delivered to customer C\_i
+* y\_i is the number of packages delivered to customer C\_i
+* ∑\_{i=1}^{5} x\_i is the total number of packages delivered by all vehicles
+* x\_i ≥ 0 and y\_i ≥ 0 indicate that each package must be delivered by at least one vehicle
+* x\_i + y\_i = 1 indicates that each package can only be delivered by one vehicle
+
+This problem is a mixed integer programming problem because it involves both continuous and integer decision variables. The objective function is a quadratic function of the decision variables, and the constraints are linear inequalities.\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the number of packages delivered to each customer as n\_A, n\_B, n\_C, ..., n\_P. We will also use x and y to represent the coordinates of each customer.
+
+Decision variables:
+n\_A, n\_B, n\_C, ..., n\_P
+
+Objective function:
+The objective is to minimize the total distance traveled by all vehicles. The total distance is equal to the sum of the distances between each pair of customers. The distance between any two locations is equal to the Euclidean distance, which is the square root of the sum of the squares of their x and y coordinate differences. Thus, our objective function is:
+
+$\min \sum\_{i=1}^{20} \sqrt{(\frac{x\_i - x_{i-1}}{2})^2 + (\frac{y\_i - y_{i-1}}{2})^2}$
+
+Constraints:
+1. The number of packages delivered to each customer must be non-negative:
+
+$n\_A, n\_B, n\_C, ..., n\_P \geq 0$
+
+2. The total number of packages delivered must be equal to the total number of packages available at the warehouse:
+
+$\sum\_{i=1}^{20} n\_i = 5$
+
+In LaTeX form, the mathematical model is as follows:
+
+\[
+\begin{aligned}
+& \text{minimize} && \sqrt{(\frac{x\_i - x_{i-1}}{2})^2 + (\frac{y\_i - y_{i-1}}{2})^2} \\
+& \text{subject to} && \sum\_{i=1}^{20} n\_i = 5, \\
+&&& n\_A, n\_B, n\_C, ..., n\_P \geq 0.
+\end{aligned}
+\]
+
+This is a non-linear optimization problem due to the square root term in the objective function. It is a specific type of non-linear programming problem known as a quadratic programming problem. To solve it, you can use specialized quadratic programming solvers or apply transformations to linearize or convexify the problem.\\\\%
+\textbf{Vicuna few-shot}: To minimize the total distance traveled by all vehicles, we need to find the optimal route for each vehicle. Since there are five vehicles, we can assign each vehicle to visit one customer. We can then find the shortest path between the warehouse and each customer by using a graph search algorithm such as Dijkstra's algorithm.
+
+Let's define the decision variables as the routes for each vehicle:
+
+* Let $r\_i$ be the route for vehicle $i$, where $i \in {1, 2, 3, 4, 5}$.
+
+The objective function is the total distance traveled by all vehicles:
+
+$$
+\text{minimize} \quad \sum\_{i=1}^5 \sqrt{(\Delta x\_i)^2 + (\Delta y\_i)^2}
+$$
+
+where $\Delta x\_i$ and $\Delta y\_i$ are the differences between the x and y coordinates of the starting and ending points of vehicle $i$.
+
+We also have the following constraints:
+
+* Each vehicle visits one customer:
+
+$$
+\sum\_{i=1}^\\\\%
+\end{document}

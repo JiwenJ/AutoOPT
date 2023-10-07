@@ -1,0 +1,96 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 34}: A waste management company has a fleet of 5 trucks with a capacity of 100 kg each. The company needs to collect garbage from 10 locations with the following amounts of waste: 40, 20, 55, 15, 25, 40, 35, 30, 45, and 50 kg. The company's depot is located at (0,0) and the locations are located at (1,-1), (-1,-1), (-1,1), (1,1), (2,-2), (-2,-2), (-2,2), (2,2), (3,-3), and (-3,-3) respectively. The distance between any two locations is calculated using the Manhattan distance formula. How can the company plan the routes of its trucks while collecting all the garbage and not exceeding the trucks' capacities?
+\\\\%
+\textbf{GPT-4}: \\\\%
+\textbf{Vicuna zero-shot}: This problem can be modeled as a Vehicle Routing Problem (VRP) with capacity constraints. The decision variables for this problem are the routes of the trucks, and the objective is to minimize the total distance traveled by the trucks while collecting all the waste and not exceeding the capacity of each truck.
+
+Let's define the following variables:
+
+* x\_{ij}: binary variable indicating whether truck i visits location j
+* c\_i: the capacity of truck i
+* w\_j: the amount of waste at location j
+* d\_ij: the distance between truck i and location j
+
+We can then formulate the VRP as follows:
+
+Minimize: Σ\_{i=1}^5 Σ\_{j=1}^{10} c\_i d\_ij x\_{ij}
+
+Subject to:
+
+* For all i and j: x\_{ij} <= 1 (truck i visits location j)
+* For all i and j: x\_{ij} <= w\_j / c\_i (truck i can carry the waste at location j)
+* For all i: Σ\_{j=1}^{10} x\_{ij} <= 1 (truck i does not visit more than one location)
+* For all j: Σ\_{i=1}^5 x\_{ij} <= 1 (location j is visited by at most one truck)
+* d\_ij >= 0 (distance between truck i and location j is non-negative)
+
+This model can be solved using a Mixed Integer Programming (MIP) solver, such as Gurobi or CPLEX, to obtain the optimal routes of the trucks that minimize the total distance while collecting all the waste within the capacity constraints.\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the location of each garbage collection site as a vector of its x and y coordinates. Let's denote the capacity of each truck as 100 kg.
+
+Decision variables:
+$x\_i, y\_i \in \mathbb{R}, i = 1, 2, \ldots, 10$
+
+Objective function:
+The objective is to minimize the total distance traveled by the trucks while collecting all the garbage and not exceeding the trucks' capacities. The distance between two locations is calculated using the Manhattan distance formula:
+
+$d(x\_1, y\_1, x\_2, y\_2) = \sqrt{(x\_1 - x\_2)^2 + (y\_1 - y\_2)^2}$
+
+Thus, our objective function is:
+
+$\min \sum\_{i=1}^{10} d(x\_i, y\_i, x\_0, y\_0)$
+
+where $x\_0, y\_0$ are the coordinates of the depot.
+
+Constraints:
+
+1. Capacity constraint:
+
+$x\_i + y\_i \leq 100, \quad i = 1, 2, \ldots, 10$
+
+2. Location constraint:
+
+$x\_i^2 + y\_i^2 \leq r\_i^2, \quad i = 1, 2, \ldots, 10$
+
+where $r\_i$ is the distance from the depot to the $i$-th location.
+
+3. Non-negativity constraint:
+
+$x\_i, y\_i \geq 0, \quad i = 1, 2, \ldots, 10$
+
+In LaTeX form, the mathematical model is as follows:
+
+\[
+\begin{aligned}
+& \text{minimize} && \sum\_{i=1}^{10} d(x\_i, y\_i, x\_0, y\_0) \\
+& \text{subject to} && x\_i + y\_i \leq 100, \quad i = 1, 2, \ldots, 10, \\
+\\\\%
+\textbf{Vicuna few-shot}: To solve this problem, we can use a variation of the traveling salesman problem (TSP) known as the open TSP. In the open TSP, we are given a set of cities and the distances between them, but we are also allowed to visit cities multiple times. In this case, we can think of each location as a city and the distances between them as the waste amounts.
+
+To formulate the problem as an optimization problem, we can use the following variables:
+
+* $x\_i$ : binary variable indicating whether truck i visits location i
+* $y\_i$ : continuous variable representing the amount of waste collected by truck i
+* $c\_i$ : cost of traveling from depot to location i
+* $z\_i$ : binary variable indicating whether location i is visited by any truck
+
+We can then formulate the following objective function:
+
+minimize $\sum\_{i=1}^{5} c\_i \cdot x\_i$
+
+subject to:
+
+* $\sum\_{i=1}^{5} x\_i = 5$
+* $\sum\_{i=1}^{1\\\\%
+\end{document}

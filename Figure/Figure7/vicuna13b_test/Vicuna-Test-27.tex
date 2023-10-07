@@ -1,0 +1,106 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 27}: A backpacker wants to pack some items for a trip without exceeding the weight limit of his backpack. There are four items in his room, each with a certain weight and usefulness as shown in the following table: 
+Item F G H I 
+Weight (kg) 1 2 3 4 
+Usefulness (points) 500 600 800 900 
+The backpacker has a backpack with a capacity of 6 kg for weight. The backpacker wants to maximize the total usefulness of the items that he can fit into the backpack while not exceeding the weight limit. How should the backpacker choose which items to pack?
+\\\\%
+\textbf{GPT-4}: This problem is a classic example of the 0-1 Knapsack Problem, which is a combinatorial optimization problem. Here, the decision is binary for each item (either include the item in the backpack or not), making it a mixed-integer problem.
+
+First, let's define our decision variables. We'll have four binary variables, one for each item:
+
+- $x_F$: 1 if item F is included in the backpack, 0 otherwise
+- $x_G$: 1 if item G is included in the backpack, 0 otherwise
+- $x_H$: 1 if item H is included in the backpack, 0 otherwise
+- $x_I$: 1 if item I is included in the backpack, 0 otherwise
+
+Our objective function is to maximize the total usefulness of the items in the backpack. Given the usefulness values for each item, we can represent this as:
+
+$$\max Z = 500x_F + 600x_G + 800x_H + 900x_I$$
+
+The constraint is that the total weight of the items in the backpack cannot exceed 6 kg. Given the weight of each item, we represent this constraint as:
+
+$$x_F + 2x_G + 3x_H + 4x_I \leq 6$$
+
+And, since our decision variables are binary, we have the following additional constraints:
+
+$$x_F, x_G, x_H, x_I \in \{0,1\}$$. 
+
+This is a mixed integer programming problem because the decision variables can take on integer values (in this case, binary values of 0 or 1).
+
+I've modelled the problem this way because we need to make a decision on whether to include each item in the backpack (hence the binary decision variables), we want to maximize the total usefulness (hence the objective function), and we are limited by the total weight that the backpack can carry (hence the constraint). The problem is made simpler by the fact that we only have four items to consider, and each item can either be included in the backpack or not (it can't be partially included).\\\\%
+\textbf{Vicuna zero-shot}: The problem can be modeled as a mathematical optimization problem, where the objective is to maximize the total usefulness of the items while not exceeding the weight limit.
+
+Let x1, x2, x3, and x4 be the decision variables, representing the number of items of each type that the backpacker chooses to pack.
+
+The objective function can be defined as:
+
+Maximize: 500x1 + 600x2 + 800x3 + 900x4
+
+Subject to: 1 kg <= x1 + x2 + x3 + x4 <= 6 kg
+
+The above equation represents the objective function, which is to maximize the total usefulness of the items. The constraint ensures that the total weight of the items does not exceed the capacity of the backpack.
+
+This problem can be solved using linear programming techniques. The optimal solution will be the combination of items that maximizes the objective function subject to the constraint.\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the weight and usefulness of each item as w\_i and u\_i, respectively. We will also denote the weight of the backpack as B and the total usefulness of the items as T.
+
+Decision variables:
+$x\_1, x\_2, x\_3, x\_4 \geq 0$
+
+Objective function:
+The objective is to maximize the total usefulness of the items that can fit into the backpack while not exceeding the weight limit. The total weight of the items that can fit into the backpack is equal to the weight of the backpack minus the total weight of the items that have already been packed. Thus, our objective function is:
+
+$\max T = \max \left( \sum\_{i=1}^4 w\_i x\_i \right) - B$
+
+Constraints:
+1. The weight of each item must be less than or equal to the weight of the backpack:
+
+$w\_i x\_i \leq B$
+
+2. The total weight of the items that have already been packed must be less than or equal to the weight of the backpack:
+
+$\sum\_{i=1}^4 w\_i x\_i \leq B$
+
+3. The usefulness of each item must be greater than or equal to zero:
+
+$u\_i x\_i \geq 0$
+
+In LaTeX form, the mathematical model is as follows:
+
+\[
+\begin{aligned}
+& \text{maximize} && \sum\_{i=1}^4 w\_i x\_i - B \\
+& \text{subject to} && w\_i x\_i \leq B, \quad i=1,\ldots,4 \\
+&& \sum\_{i=1}^4 w\_i x\_i \leq B, \\
+&& u\_i x\_i \geq 0, \quad i=1,\ldots,4.
+\end{aligned}
+\]
+
+This is a linear optimization problem with inequality constraints. It can be solved using standard linear programming techniques, such as the simplex method or the interior point method.\\\\%
+\textbf{Vicuna few-shot}: To model this problem, we can define decision variables for each item, representing whether or not it is included in the backpack. We can also define an objective function that maximizes the total usefulness of the items while not exceeding the weight limit.
+
+Let x1, x2, x3, and x4 be decision variables representing whether or not item F, G, H, and I are included in the backpack, respectively. Let w6 be the weight of the backpack, and let f(w6) be the total usefulness of the items that can be included in the backpack without exceeding the weight limit. Then, we can define the objective function as follows:
+
+maximize f(w6) = 500x1 + 600x2 + 800x3 + 900x4
+
+subject to w6 <= 6
+
+We can also add a constraint to ensure that the decision variables are non-negative:
+
+x1, x2, x3, x4 >= 0
+
+This is a linear programming problem that can be solved using a solver such as Excel or a programming language like Python or\\\\%
+\end{document}

@@ -1,0 +1,103 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 35}: A flower delivery company has a fleet of 5 cars with a capacity of 50 flowers each. The company needs to deliver flowers to 10 customers with the following orders: 15, 10, 25, 20, 25, 10, 15, 30, 5, and 20 flowers. The company's shop is located at (0,0) and the customers are located at (1,-1), (-1,-1), (-1,1), (1,1), (2,-2), (-2,-2), (-2,2), (2,2), (3,-3), and (-3,-3) respectively. The distance between any two locations is calculated using the Chebyshev distance formula. How can the company plan the routes of its cars while delivering all the flowers and not exceeding the cars' capacities?
+\\\\%
+\textbf{GPT-4}: \\\\%
+\textbf{Vicuna zero-shot}: This problem can be modeled as a combinatorial optimization problem, specifically a vehicle routing problem (VRP) with capacity constraints.
+
+The decision variables for this problem are the routes taken by each of the 5 cars. Each route is represented by a set of coordinates, where each coordinate corresponds to a customer that the car will visit.
+
+The objective function is to minimize the total distance traveled by the cars, which can be represented as the sum of the Chebyshev distances between each pair of coordinates.
+
+The constraints for this problem are:
+
+1. Each car has a capacity of 50 flowers, and the total number of flowers delivered to each customer must not exceed this capacity. This can be represented using a constraint for each car, stating that the sum of the flowers delivered to each customer must be less than or equal to 50.
+2. The distance between any two locations must be calculated using the Chebyshev distance formula. This can be represented using a constraint for each pair of coordinates, stating that the distance between them must be less than or equal to the Chebyshev distance.
+3. Each customer must be visited by exactly one car. This can be represented using a constraint stating that for each customer, there is exactly one coordinate corresponding to that customer.
+
+Overall, the mathematical model for this problem can be represented as follows:
+
+minimize Σ(C(i,j) \* d(i,j))
+
+subject to:
+
+Σ(C(i,j) \* x(i,j)) <= 50, for all i,j
+
+d(i,j) = √(x(i,j)^2 + y(i,j)^2)
+
+x(i,j) >= 0, for all i,j
+
+y(i,j) >= 0, for all i,j
+
+x(i,j) = 1, for all i,j
+
+y(i,j) = 1, for all i,j
+
+y(i,j) = -1, for all i,j
+
+where C(i,j) is a binary variable indicating whether or not car j visits customer i, x(i,j) is a binary variable indicating whether or not car j visits customer i, and y(i,j)\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the coordinates of the delivery locations as (x\_i, y\_i), where i = 1, 2, ..., 10. The distance between the company's shop and each delivery location will be calculated using the Chebyshev distance formula:
+
+d(x, y) = sqrt(x^2 + y^2)
+
+The distance between the company's shop and each delivery location will be denoted by d\_i.
+
+Decision variables:
+
+* x: the number of cars used to deliver flowers
+* y: the number of trips made by each car
+
+Objective function:
+
+* The objective is to minimize the total distance traveled by the cars while delivering all the flowers.
+
+Constraints:
+
+1. The capacity of each car is 50 flowers. The total number of flowers delivered must be equal to the total number of flowers ordered.
+
+$50x + 50y = \sum\_{i=1}^{10} 15i$
+
+2. Each car can only make one trip. The number of trips made by each car must be equal to the number of delivery locations.
+
+$x + y = \sum\_{i=1}^{10} 1$
+
+3. The distance between any two locations is at most the sum of the distances between their coordinates.
+
+$d\_{i1} + d\_{i2} \leq d\_i$
+
+where $d\_{i1}$ and $d\_{i2}$ are the distances between the company's shop and the two delivery locations (i.e., the first two customers).
+
+In LaTeX form, the mathematical model is as follows:
+
+\[
+\begin{aligned}
+& \text{minimize} && \sum\_{i=1}^{10} d\_i^2 \\
+& \text{subject to} && 50x + 50y = \sum\_{i=1}^{10} 15i, \\
+&&& x + y = \sum\_{i=1}^{10} 1, \\
+&&& d\_{i1} + d\_{i2} \leq d\_i, \\
+&&& x\\\\%
+\textbf{Vicuna few-shot}: To solve this problem, we can use the Vehicle Routing Problem (VRP) formulation. The VRP is a well-known optimization problem that involves finding the best routes for a fleet of vehicles to service a set of customers while minimizing the total distance traveled or the total time taken.
+
+In this case, we have 5 cars with a capacity of 50 flowers each, and we need to deliver flowers to 10 customers located at different points in 2-dimensional space. We can represent the problem as follows:
+
+* Decision variables:
+	+ $x\_i$ for each car i (whether the car is assigned to customer i or not)
+	+ $y\_i$ for each car i (the starting point of the car)
+	+ $z\_i$ for each car i (the destination point of the car)
+* Objective function:
+	+ Minimize the total distance traveled by the cars
+	+ Let's assume the distance between any two points in 2-dimensional space is calculated using the Chebyshev distance formula.
+	+ The total distance traveled\\\\%
+\end{document}

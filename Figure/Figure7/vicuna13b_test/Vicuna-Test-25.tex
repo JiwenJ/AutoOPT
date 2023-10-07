@@ -1,0 +1,82 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tcolorbox}%
+\usepackage{amsmath}%
+%
+\tcbuselibrary{most}%
+%
+\begin{document}%
+\normalsize%
+\newtcolorbox{mybox}[1]{breakable, colback=white, colframe=black!50, fonttitle=\bfseries, title=#1}%
+\noindent\textbf{Question 25}: A researcher wants to compare the heights of 5 different plants and return to his lab. The plants are numbered from 1 to 5 and the distance and growth rate between each pair of plants are given in the following table: 
+Plant 1 2 3 4 5 
+1 - 1.5 3 4.5 2 
+2 - - 2.5 4 3 
+3 - - - 3.5 4 
+4 - - - - 5 
+5 - - - - - 
+The growth rate between each pair of plants is equal to the distance multiplied by a constant factor of $0.01 per inch. The researcher has a limited amount of time and can only measure the height of each plant once. The researcher wants to minimize the total growth rate while measuring the height of each plant exactly once. How should the researcher plan his route?
+\\\\%
+\textbf{GPT-4}: \\\\%
+\textbf{Vicuna zero-shot}: To model this problem, we can define the decision variable x1, x2, x3, x4, and x5, which represent the number of plants that the researcher should visit. We can formulate the objective function as the total growth rate of the plants visited, which is equal to the sum of the growth rates of the plants multiplied by the number of plants visited.
+
+The constraints of the problem are as follows:
+
+* The researcher can only visit each plant once, which can be represented by the constraint x1 + x2 + x3 + x4 + x5 = 5
+* The distance between each pair of plants is given in the table, which can be represented by the constraint 1.5 \* (x1 - 1) + 2.5 \* (x2 - 1) + 3.5 \* (x3 - 1) + 4 \* (x4 - 1) + 5 \* (x5 - 1) <= 10
+* The growth rate between each pair of plants is equal to the distance multiplied by a constant factor of $0.01 per inch, which can be represented by the constraint 0.01 \* (x1 - 1) + 0.01 \* (x2 - 1) + 0.01 \* (x3 - 1) + 0.01 \* (x4 - 1) + 0.01 \* (x5 - 1) <= 5
+
+Based on the constraints, we can see that this is a Mixed Integer Programming (MIP) problem, which involves both integer and continuous decision variables. The objective function is to minimize the total growth rate while visiting each plant exactly once.
+
+To solve this problem, we can use a MIP solver such as CPLEX or Gurobi. The solver will find the optimal solution by minimizing the objective function while satisfying the constraints. The optimal solution will be a set of integers x1, x2, x3, x4, and x5 that minimize the total growth rate while visiting each plant exactly once.\\\\%
+\textbf{Vicuna one-shot}: Let's establish a mathematical model for this problem. We will denote the heights of the plants as h1, h2, h3, h4, and h5, respectively.
+
+Decision variables:
+h1, h2, h3, h4, h5 >= 0
+
+Objective function:
+The objective is to minimize the total growth rate while measuring the height of each plant exactly once. The total growth rate is given by the sum of the growth rates between each pair of plants. The growth rate between plants i and j is given by the distance between them multiplied by a constant factor of 0.01 per inch. Thus, our objective function is:
+
+$\min \sum\_{i=1}^{5} |h\_i - h\_{i-1}| \cdot 0.01$
+
+Constraints:
+1. The heights of the plants must be non-negative:
+
+$h\_1, h\_2, h\_3, h\_4, h\_5 \geq 0$
+
+2. The researcher can only measure the height of each plant once:
+
+$h\_1 = h\_2 = h\_3 = h\_4 = h\_5$
+
+In LaTeX form, the mathematical model is as follows:
+
+\[
+\begin{aligned}
+& \text{minimize} && \sum\_{i=1}^{5} |h\_i - h\_{i-1}| \cdot 0.01 \\
+& \text{subject to} && h\_1 = h\_2 = h\_3 = h\_4 = h\_5, \\
+&&& h\_1, h\_2, h\_3, h\_4, h\_5 \geq 0.
+\end{aligned}
+\]
+
+This is a non-linear optimization problem due to the absolute value in the objective function and the non-linear constraint. It is a specific type of non-linear programming problem known as a geometric programming problem. To solve it, you can use specialized geometric programming solvers or apply transformations to linearize or convexify the problem.\\\\%
+\textbf{Vicuna few-shot}: To solve this problem, we can formulate it as a linear programming problem. Let's define our decision variables:
+
+* Let $x\_i$ be the number of plants visited by the researcher in order to measure their heights, where $i = 1, 2, 3, 4, 5$.
+
+Our objective is to minimize the total growth rate while measuring the height of each plant exactly once. The total growth rate is the sum of the growth rates between each pair of plants. We can represent this as a function:
+
+$$
+G = \sum\_{i=1}^{5} \sum\_{j=1}^{i-1} (j-i)d\_ij x\_j
+$$
+
+where $d\_ij$ is the growth rate between plants $i$ and $j$, and $x\_j$ is the number of plants visited by the researcher to measure their heights before visiting plant $i$.
+
+Now, we need to define the constraints of the problem. The researcher can only measure the height of each plant once, so we have the following constraint:
+
+$$
+x\_1\\\\%
+\end{document}
